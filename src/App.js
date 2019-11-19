@@ -1,10 +1,10 @@
 import React from 'react';
-import Recipe from './Recipe.js'
+import Recipes from './Recipes.js'
 
 function App() {
   return (
     <div className="App">
-      <Recipe />
+      <Recipes />
     </div>
   );
 }
