@@ -4,21 +4,24 @@ import ReactDOM from 'react-dom'
 	//Our Mock Datastore
 import recipes from '../store/recipes'
 
-class Recipe extends React.Component {
-    state = {
-        recipeId: this.props.match.params.id
+class Recipe extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            recipeId: this.props.match.params.id
+        }
     }
 
+
     componentDidUpdate(prevProps) { //componentDidUpdate takes previous props and previous state
-        const { id } = this.props.match.params
-        if(id != prevProps.params.id) {
-            this.setState({recipeId: id})
+        if(this.props.match.params.id != prevProps.match.params.id){
+            this.setState({recipeId: this.props.match.params.id})
         }
     }
 
     render(){
         const { recipeId } = this.state
-        const recipe = recipes.find((r)=> r.id == recipeId)
+        const recipe = recipes.find((r)=> r.id == recipeId) // ? what/how is this
         
         return(
             <div>

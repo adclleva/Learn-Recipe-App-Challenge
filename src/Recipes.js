@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 // These are all components from the router that we use in render().
 
 //Import of our Mock Data
 import recipes from './store/recipes'
+import Recipe from './pages/Recipe'
 
 class Recipes extends Component {
   constructor(props){
@@ -14,49 +14,47 @@ class Recipes extends Component {
     }
   }
 
-  handleClick = () => {
-      const { allRecipes } = this.state
-    const newRecipe = {
-        id: 3,
-        name: 'Test',
-        instructions: 'Test Instructions.'
-      }
-    const newRecipes = [...allRecipes, newRecipe]
-    this.setState({allRecipes: newRecipes})
+  // handleClick = () => {
+  //     const { allRecipes } = this.state
+  //   const newRecipe = {
+  //       id: 3,
+  //       name: 'Test',
+  //       instructions: 'Test Instructions.'
+  //     }
+  //   const newRecipes = [...allRecipes, newRecipe]
+  //   this.setState({allRecipes: newRecipes})
 
-    console.log(newRecipes) 
-  }
+  //   console.log(newRecipes) 
+  // }
 
   render() {
     const { allRecipes } = this.state
-    // this.setState({allRecipes: newRecipes})
 
     return(
       <Router>
-        <h1>Recipes</h1>
-        
         <div>
+          <nav>
+           <h1>Recipes</h1>
+            <ul>
+              {allRecipes.map((recipeObj, index) => // ? why don't we need the brackets here
+                <li key={index}> 
+                  <Link to={`/recipe/${recipeObj.id}`}>
+                    {recipeObj.name}
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </nav>
             
-            <Link to ="/recipe">Recipe</Link>
-
             <Switch>
-                <Route path="/" exact component={Home}/>
+                <Route path="/recipe/:id" 
+                       component={Recipe}
+                />
             </Switch>
 
 
             {/* <h3 onClick={this.handleClick}>Add Recipe</h3> */}
-            <ul>
-                {allRecipes.map((recipeObj, index) => {
-                    const { id, name, instructions } = recipeObj
 
-                    return(
-                        <li key={index}>
-                            <h2>{id} : {name}</h2>
-                            <h3>{instructions}</h3>
-                        </li>
-                    )
-                })}
-             </ul>
         </div>
       </Router>
     )
